@@ -8,9 +8,10 @@ const starContainerStyle = {
   listStyle: 'none'
 };
 
-const starStyle = { width: '3rem', height: '3rem', display: 'block', cursor: 'pointer'};
+const Star = ({index, onRate, filled, onMouseIn, onMouseOut, color, size}) => {
 
-const Star = ({index, onRate, filled, onMouseIn, onMouseOut, color}) => {
+ const starStyle = { width: `${size}px`, height: `${size} px`, display: 'block', cursor: 'pointer'};
+
  return (
    <li onClick={() => 
        onRate(index)} 
@@ -41,7 +42,7 @@ const Star = ({index, onRate, filled, onMouseIn, onMouseOut, color}) => {
 }
   
 
-const StarRating = ({ maxRating = 5, color = 'gray' }) => {
+const StarRating = ({ maxRating = 5, color = 'gray', size = 48  }) => {
   const [rating, setRating] = useState(0);
   const [tempRating, setTempRating] = useState(0);
 
@@ -50,13 +51,14 @@ const StarRating = ({ maxRating = 5, color = 'gray' }) => {
   const handleRating = index => setRating(index + 1);
   const isGreaterThanIndex = index => (tempRating || rating) > index;
   
-  const textStyle = { margin : 0, color };
+  const textStyle = { margin : 0, color, fontSize: `${size / 1.5}px` };
 
   return (
      <div style={containerStyle}>
        <ul style={starContainerStyle}>
         {Array.from({length: maxRating }, (_, i) => 
          <Star 
+           size={size}
            color={color}
            onRate={handleRating} 
            key={i} 
