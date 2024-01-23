@@ -12,9 +12,14 @@ const starContainerStyle = {
 
 const starStyle = { width: '3rem', height: '3rem', display: 'block', cursor: 'pointer'};
 
-const Star = ({index, onRate, filled}) => {
+const Star = ({index, onRate, filled, onMouseIn, onMouseOut}) => {
  return (
-   <li onClick={() => onRate(index)} style={starStyle}>
+   <li onClick={() => 
+       onRate(index)} 
+       style={starStyle} 
+       onMouseEnter={() => onMouseIn(index)}
+       onMouseLeave={onMouseOut}
+       > 
     {filled 
       ? (
         <svg xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +38,6 @@ const Star = ({index, onRate, filled}) => {
          </svg>
       )
     }
-    
    </li>
   );
 }
@@ -41,9 +45,13 @@ const Star = ({index, onRate, filled}) => {
 
 const StarRating = ({ maxRating = 5 }) => {
   const [rating, setRating] = useState(0);
+  const [tempRating, setTempRating] = useState(0);
 
+  const handleMouseOut = () => setTempRating(0);
+  const handleMouseIn = index => setTempRating(index + 1);
   const handleRating = index => setRating(index + 1);
   const isGreaterThanIndex = index => rating > index;
+  
 
   return (
      <div style={containerStyle}>
@@ -53,10 +61,12 @@ const StarRating = ({ maxRating = 5 }) => {
            onRate={handleRating} 
            key={i} 
            index={i} 
-           filled={isGreaterThanIndex(i)} 
+           filled={isGreaterThanIndex(i)}
+           onMouseIn={handleMouseIn} 
+           onMouseOut={handleMouseOut}
          />)}
        </ul>
-       <p style={textStyle}>{rating || ''}</p>
+       <p style={textStyle}>{tempRating || rating || ''}</p>
      </div>
     );
 }
