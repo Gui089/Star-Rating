@@ -50,7 +50,7 @@ const StarRating = ({ maxRating = 5 }) => {
   const handleMouseOut = () => setTempRating(0);
   const handleMouseIn = index => setTempRating(index + 1);
   const handleRating = index => setRating(index + 1);
-  const isGreaterThanIndex = index => rating > index;
+  const isGreaterThanIndex = index => (tempRating || rating) > index;
   
 
   return (
